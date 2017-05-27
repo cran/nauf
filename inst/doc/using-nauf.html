@@ -12,7 +12,7 @@
 
 <meta name="author" content="Christopher D. Eager" />
 
-<meta name="date" content="2017-05-08" />
+<meta name="date" content="2017-05-26" />
 
 <title>Using the nauf package</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Using the nauf package</h1>
 <h4 class="author"><em>Christopher D. Eager</em></h4>
-<h4 class="date"><em>2017-05-08</em></h4>
+<h4 class="date"><em>2017-05-26</em></h4>
 
 
 
@@ -82,9 +82,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>NA values in random effects grouping factors</h2>
 <p>The <strong>plosives</strong> dataset (Eager, 2017) included in the <em>nauf</em> package contains measures of plosive strength for instances of intervocalic Spanish /p/, /t/, /k/, /b/, /d/ and /g/ from speakers from three dialects. For this first example we will focus on the voiceless plosives /ptk/ from the 30 speakers in the Cuzco dialect. The dataset contains a combination of experimental data (with exactly repeated measures on items from a read speech task) and observational data (without exactly repeated measures; from interviews with the same speakers). For the spontaneous speech (as indicated by the logical variable <em>spont</em>) the <em>item</em> factor is coded as NA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nauf)
-<span class="co">#&gt; Loading required package: standardize</span>
-<span class="co">#&gt; Loading required package: lme4</span>
-<span class="co">#&gt; Loading required package: Matrix</span>
 
 <span class="kw">summary</span>(plosives)
 <span class="co">#&gt;       cdur            vdur             vpct           intdiff      </span>
@@ -265,7 +262,7 @@ m.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_lmer</span>(s.pvoi$fo
 <span class="kw">summary</span>(m.pvoi)
 <span class="co">#&gt; Linear mixed model fit by REML ['nauf.lmerMod']</span>
 <span class="co">#&gt; Formula: </span>
-<span class="co">#&gt; pvoi ~ uvoi + lang * wordpos + (1 + wordpos + uvoi | c_speaker) +  </span>
+<span class="co">#&gt; pvoi ~ lang * wordpos + uvoi + (1 + wordpos + uvoi | c_speaker) +  </span>
 <span class="co">#&gt;     (1 + wordpos | s_speaker)</span>
 <span class="co">#&gt;    Data: s.pvoi$data</span>
 <span class="co">#&gt; </span>
@@ -281,8 +278,8 @@ m.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_lmer</span>(s.pvoi$fo
 <span class="co">#&gt;            wordposFinal   0.042090 0.20516  -0.67            </span>
 <span class="co">#&gt;            wordposInitial 0.034222 0.18499   0.36 -0.91      </span>
 <span class="co">#&gt;            uvoiVoiced     0.028117 0.16768  -0.21  0.76 -0.73</span>
-<span class="co">#&gt;  s_speaker (Intercept)    0.123762 0.35180                   </span>
-<span class="co">#&gt;            wordposFinal   0.011091 0.10532   0.92            </span>
+<span class="co">#&gt;  s_speaker (Intercept)    0.123763 0.35180                   </span>
+<span class="co">#&gt;            wordposFinal   0.011092 0.10532   0.92            </span>
 <span class="co">#&gt;            wordposInitial 0.006788 0.08239  -0.38  0.01      </span>
 <span class="co">#&gt;  Residual                 0.482529 0.69464                   </span>
 <span class="co">#&gt; Number of obs: 1622, groups:  c_speaker, 26; s_speaker, 16</span>
@@ -290,29 +287,23 @@ m.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_lmer</span>(s.pvoi$fo
 <span class="co">#&gt; Fixed effects:</span>
 <span class="co">#&gt;                            Estimate Std. Error t value</span>
 <span class="co">#&gt; (Intercept)                 0.02215    0.06339   0.349</span>
-<span class="co">#&gt; uvoiVoiced                  0.64891    0.04716  13.761</span>
 <span class="co">#&gt; langCatalan                 0.28058    0.06339   4.426</span>
 <span class="co">#&gt; wordposFinal                0.46883    0.04183  11.208</span>
 <span class="co">#&gt; wordposInitial             -0.40194    0.03791 -10.603</span>
+<span class="co">#&gt; uvoiVoiced                  0.64890    0.04716  13.761</span>
 <span class="co">#&gt; langCatalan:wordposFinal    0.28252    0.04183   6.754</span>
 <span class="co">#&gt; langCatalan:wordposInitial -0.39017    0.03791 -10.292</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Correlation of Fixed Effects:</span>
-<span class="co">#&gt;             (Intr) uvoVcd lngCtl wrdpsF wrdpsI lngC:F</span>
-<span class="co">#&gt; uvoiVoiced  -0.098                                   </span>
-<span class="co">#&gt; langCatalan -0.150 -0.098                            </span>
-<span class="co">#&gt; wordposFinl  0.105  0.282 -0.416                     </span>
-<span class="co">#&gt; wordposIntl  0.045 -0.236  0.155 -0.669              </span>
-<span class="co">#&gt; lngCtln:wrF -0.416  0.282  0.105  0.076 -0.184       </span>
-<span class="co">#&gt; lngCtln:wrI  0.155 -0.236  0.045 -0.184  0.057 -0.669</span></code></pre></div>
+<span class="co">#&gt;             (Intr) lngCtl wrdpsF wrdpsI uvoVcd lngC:F</span>
+<span class="co">#&gt; langCatalan -0.150                                   </span>
+<span class="co">#&gt; wordposFinl  0.105 -0.416                            </span>
+<span class="co">#&gt; wordposIntl  0.045  0.155 -0.669                     </span>
+<span class="co">#&gt; uvoiVoiced  -0.098 -0.098  0.282 -0.236              </span>
+<span class="co">#&gt; lngCtln:wrF -0.416  0.105  0.076 -0.184  0.282       </span>
+<span class="co">#&gt; lngCtln:wrI  0.155  0.045 -0.184  0.057 -0.236 -0.669</span></code></pre></div>
 <p>To understand how <em>nauf</em> treats the NA values in <em>uvoi</em>, we call <strong>nauf_contrasts</strong>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nauf_contrasts</span>(m.pvoi)
-<span class="co">#&gt; $uvoi</span>
-<span class="co">#&gt;           Voiced</span>
-<span class="co">#&gt; Voiced         1</span>
-<span class="co">#&gt; Voiceless     -1</span>
-<span class="co">#&gt; &lt;NA&gt;           0</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; $lang</span>
 <span class="co">#&gt;         Catalan</span>
 <span class="co">#&gt; Catalan       1</span>
@@ -322,20 +313,26 @@ m.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_lmer</span>(s.pvoi$fo
 <span class="co">#&gt;         Final Initial</span>
 <span class="co">#&gt; Final       1       0</span>
 <span class="co">#&gt; Initial     0       1</span>
-<span class="co">#&gt; Medial     -1      -1</span></code></pre></div>
+<span class="co">#&gt; Medial     -1      -1</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $uvoi</span>
+<span class="co">#&gt;           Voiced</span>
+<span class="co">#&gt; Voiced         1</span>
+<span class="co">#&gt; Voiceless     -1</span>
+<span class="co">#&gt; &lt;NA&gt;           0</span></code></pre></div>
 <p>The function returns a list with an element for each of the three factors. Sum contrasts have been applied for all three with <strong>named_contr_sum</strong> from the <em>standardize</em> package, but for <em>uvoi</em> there is an additional row indicating that a value of 0 is used when it is NA. In this way, the <em>uvoiVoiced</em> coefficient in the summary never contributes to the fitted value for any observation that belongs to a subset where underlying voicing is not contrastive, and its estimate represents half the difference between voiced and voiceless Catalan word-medial observations. We can run an <strong>anova</strong> just as we did in the Cuzco example (though in this case it is not as useful since we are interested in making specific comparisons), and also create a reference grid:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(m.pvoi, <span class="dt">method =</span> <span class="st">&quot;S&quot;</span>)
 <span class="co">#&gt; Mixed Model Anova Table (Type III tests, S-method)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Model: pvoi ~ uvoi + lang * wordpos + (1 + wordpos + uvoi | c_speaker) + </span>
+<span class="co">#&gt; Model: pvoi ~ lang * wordpos + uvoi + (1 + wordpos + uvoi | c_speaker) + </span>
 <span class="co">#&gt; Model:     (1 + wordpos | s_speaker)</span>
 <span class="co">#&gt; Data: $</span>
 <span class="co">#&gt; Data: s.pvoi</span>
 <span class="co">#&gt; Data: data</span>
 <span class="co">#&gt;              num Df den Df       F    Pr(&gt;F)    </span>
-<span class="co">#&gt; uvoi              1 20.331 189.361 9.136e-12 ***</span>
 <span class="co">#&gt; lang              1 29.382  19.591 0.0001215 ***</span>
 <span class="co">#&gt; wordpos           2 30.293  71.535 3.349e-12 ***</span>
+<span class="co">#&gt; uvoi              1 20.331 189.361 9.136e-12 ***</span>
 <span class="co">#&gt; lang:wordpos      2 30.293  52.983 1.285e-10 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
@@ -359,14 +356,14 @@ rg.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_ref.grid</span>(m.pv
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pmmeans</span>
 <span class="co">#&gt;  lang        pmmean         SE    df   lower.CL   upper.CL</span>
-<span class="co">#&gt;  Catalan -0.3973943 0.10546709 24.10 -0.6150205 -0.1797680</span>
-<span class="co">#&gt;  Spanish -0.3515808 0.08533872 12.07 -0.5374041 -0.1657574</span>
+<span class="co">#&gt;  Catalan -0.3973943 0.10546712 24.10 -0.6150206 -0.1797680</span>
+<span class="co">#&gt;  Spanish -0.3515808 0.08533869 12.07 -0.5374041 -0.1657574</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Confidence level used: 0.95 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $contrasts</span>
 <span class="co">#&gt;  contrast             estimate        SE    df t.ratio p.value</span>
-<span class="co">#&gt;  Catalan - Spanish -0.04581348 0.1356687 35.55  -0.338  0.7376</span></code></pre></div>
+<span class="co">#&gt;  Catalan - Spanish -0.04581351 0.1356687 35.55  -0.338  0.7376</span></code></pre></div>
 <p>Each of the lists specified in the <em>subset</em> list represents a set of valid combinations of factor levels where language is truly contrastive. Any row in the reference grid which belongs to at least one of the specified groups is kept and the others are ignored. So the Catalan estimate is an average of Catalan:Initial:NA and Catalan:Medial:Voiceless, and the Spanish estimate is an average of Spanish:Initial:NA and Spanish:Medial:NA. To test the effect of word position in Spanish, we can call:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nauf_pmmeans</span>(rg.pvoi, <span class="st">&quot;wordpos&quot;</span>, <span class="dt">pairwise =</span> <span class="ot">TRUE</span>,
   <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">lang =</span> <span class="st">&quot;Spanish&quot;</span>, <span class="dt">uvoi =</span> <span class="ot">NA</span>)
@@ -381,17 +378,17 @@ rg.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_ref.grid</span>(m.pv
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pmmeans</span>
 <span class="co">#&gt;  wordpos      pmmean         SE    df   lower.CL    upper.CL</span>
-<span class="co">#&gt;  Final   -0.07211641 0.13419220 10.59 -0.3688843  0.22465150</span>
-<span class="co">#&gt;  Initial -0.27019499 0.10439373 10.34 -0.5017670 -0.03862296</span>
-<span class="co">#&gt;  Medial  -0.43296656 0.08733768 13.14 -0.6214423 -0.24449083</span>
+<span class="co">#&gt;  Final   -0.07211647 0.13419238 10.59 -0.3688850  0.22465208</span>
+<span class="co">#&gt;  Initial -0.27019498 0.10439365 10.34 -0.5017668 -0.03862313</span>
+<span class="co">#&gt;  Medial  -0.43296656 0.08733771 13.14 -0.6214424 -0.24449071</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Confidence level used: 0.95 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $contrasts</span>
 <span class="co">#&gt;  contrast          estimate         SE    df t.ratio p.value</span>
-<span class="co">#&gt;  Final - Initial  0.1980786 0.09495936 30.94   2.086  0.1093</span>
-<span class="co">#&gt;  Final - Medial   0.3608501 0.09744097 10.11   3.703  0.0102</span>
-<span class="co">#&gt;  Initial - Medial 0.1627716 0.08900033 14.78   1.829  0.1945</span>
+<span class="co">#&gt;  Final - Initial  0.1980785 0.09495946 30.94   2.086  0.1093</span>
+<span class="co">#&gt;  Final - Medial   0.3608501 0.09744109 10.11   3.703  0.0102</span>
+<span class="co">#&gt;  Initial - Medial 0.1627716 0.08900031 14.78   1.829  0.1945</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; P value adjustment: tukey method for comparing a family of 3 estimates</span></code></pre></div>
 <p>In this call, we are only specifying one group in <em>subset</em>, so we don’t need to double-list it (i.e. <em>nauf</em> will understnd <em>list(lang = “Spanish”, uvoi = NA)</em> as <em>list(list(lang = “Spanish”, uvoi = NA))</em>). In Catalan, while fricatives occur in all three word positions, word position is only fully contrastive (i.e. its effect can only be truly isolated) for word-initial vs. word-medial /s/:</p>
@@ -411,14 +408,14 @@ rg.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_ref.grid</span>(m.pv
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pmmeans</span>
 <span class="co">#&gt;  wordpos     pmmean        SE    df   lower.CL    upper.CL</span>
-<span class="co">#&gt;  Initial -0.4893760 0.1086126 23.75 -0.7136641 -0.26508786</span>
-<span class="co">#&gt;  Medial  -0.3054125 0.1163455 23.48 -0.5458214 -0.06500371</span>
+<span class="co">#&gt;  Medial  -0.3054125 0.1163456 23.48 -0.5458214 -0.06500364</span>
+<span class="co">#&gt;  Initial -0.4893760 0.1086127 23.75 -0.7136642 -0.26508781</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Confidence level used: 0.95 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $contrasts</span>
-<span class="co">#&gt;  contrast           estimate         SE   df t.ratio p.value</span>
-<span class="co">#&gt;  Initial - Medial -0.1839634 0.07856689 9.85  -2.341  0.0416</span></code></pre></div>
+<span class="co">#&gt;  contrast          estimate         SE   df t.ratio p.value</span>
+<span class="co">#&gt;  Medial - Initial 0.1839635 0.07856695 9.85   2.341  0.0416</span></code></pre></div>
 <p>Similarly, voicing is only contrastive for Catalan medial fricatives, and so we can call:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nauf_pmmeans</span>(rg.pvoi, <span class="st">&quot;uvoi&quot;</span>, <span class="dt">pairwise =</span> <span class="ot">TRUE</span>,
   <span class="dt">subset =</span> <span class="kw">list</span>(<span class="dt">lang =</span> <span class="st">&quot;Catalan&quot;</span>, <span class="dt">wordpos =</span> <span class="st">&quot;Medial&quot;</span>)
@@ -433,14 +430,14 @@ rg.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_ref.grid</span>(m.pv
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pmmeans</span>
 <span class="co">#&gt;  uvoi          pmmean        SE    df   lower.CL    upper.CL</span>
-<span class="co">#&gt;  Voiced     0.9923975 0.1005598 25.74  0.7855905  1.19920443</span>
-<span class="co">#&gt;  Voiceless -0.3054125 0.1163455 23.48 -0.5458214 -0.06500371</span>
+<span class="co">#&gt;  Voiced     0.9923974 0.1005598 25.74  0.7855905  1.19920437</span>
+<span class="co">#&gt;  Voiceless -0.3054125 0.1163456 23.48 -0.5458214 -0.06500364</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Confidence level used: 0.95 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $contrasts</span>
 <span class="co">#&gt;  contrast           estimate         SE    df t.ratio p.value</span>
-<span class="co">#&gt;  Voiced - Voiceless  1.29781 0.09431171 20.33  13.761  &lt;.0001</span></code></pre></div>
+<span class="co">#&gt;  Voiced - Voiceless  1.29781 0.09431177 20.33  13.761  &lt;.0001</span></code></pre></div>
 <p>For Catalan word-final neutralized /S/, we may be interested in making a comparison to see whether it is somewhere in between /s/ and /z/ in terms of voicing, or not significantly different from /z/. This case requires the additional argument <em>na_as_level</em> to be specified since we want an estimate for a group where <em>uvoi</em> is NA (the default is that estiamtes are not generated for any group that has NA’s in the estimate table):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nauf_pmmeans</span>(rg.pvoi, <span class="kw">c</span>(<span class="st">&quot;wordpos&quot;</span>, <span class="st">&quot;uvoi&quot;</span>), <span class="dt">pairwise =</span> <span class="ot">TRUE</span>,
   <span class="dt">subset =</span> <span class="kw">list</span>(
@@ -450,30 +447,30 @@ rg.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_ref.grid</span>(m.pv
   <span class="dt">na_as_level =</span> <span class="st">&quot;uvoi&quot;</span>
 )
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Predicted marginal means for 'uvoi:wordpos'</span>
+<span class="co">#&gt; Predicted marginal means for 'wordpos:uvoi'</span>
 <span class="co">#&gt; NA considered a level for: 'uvoi'</span>
-<span class="co">#&gt; Note: The interaction term 'uvoi:wordpos' is not in the model.</span>
+<span class="co">#&gt; Note: The interaction term 'wordpos:uvoi' is not in the model.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Factors conditioned on: 'lang' 'wordpos' 'uvoi' </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; See the 'subset' element of the 'nauf.specs' attribute for subsetted groups.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pmmeans</span>
-<span class="co">#&gt;  uvoi      wordpos     pmmean         SE    df   lower.CL    upper.CL</span>
-<span class="co">#&gt;  NA        Final    1.0540872 0.08543594 42.33  0.8817105  1.22646392</span>
-<span class="co">#&gt;  Voiced    Medial   0.9923975 0.10055984 25.74  0.7855905  1.19920443</span>
-<span class="co">#&gt;  Voiceless Medial  -0.3054125 0.11634553 23.48 -0.5458214 -0.06500371</span>
+<span class="co">#&gt;  wordpos uvoi          pmmean         SE    df   lower.CL    upper.CL</span>
+<span class="co">#&gt;  Medial  Voiced     0.9923974 0.10055984 25.74  0.7855905  1.19920437</span>
+<span class="co">#&gt;  Medial  Voiceless -0.3054125 0.11634557 23.48 -0.5458214 -0.06500364</span>
+<span class="co">#&gt;  Final   NA         1.0540873 0.08543597 42.33  0.8817105  1.22646406</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Confidence level used: 0.95 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $contrasts</span>
-<span class="co">#&gt;  contrast                           estimate         SE    df t.ratio</span>
-<span class="co">#&gt;  NA,Final - Voiced,Medial         0.06168973 0.08207607 62.53   0.752</span>
-<span class="co">#&gt;  NA,Final - Voiceless,Medial      1.35949975 0.11077686 22.84  12.272</span>
-<span class="co">#&gt;  Voiced,Medial - Voiceless,Medial 1.29781002 0.09431171 20.33  13.761</span>
+<span class="co">#&gt;  contrast                            estimate         SE    df t.ratio</span>
+<span class="co">#&gt;  Medial,Voiced - Medial,Voiceless  1.29780996 0.09431177 20.33  13.761</span>
+<span class="co">#&gt;  Medial,Voiced - Final,NA         -0.06168987 0.08207608 62.53  -0.752</span>
+<span class="co">#&gt;  Medial,Voiceless - Final,NA      -1.35949984 0.11077688 22.84 -12.272</span>
 <span class="co">#&gt;  p.value</span>
-<span class="co">#&gt;   0.7338</span>
 <span class="co">#&gt;   &lt;.0001</span>
+<span class="co">#&gt;   0.7338</span>
 <span class="co">#&gt;   &lt;.0001</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; P value adjustment: tukey method for comparing a family of 3 estimates</span></code></pre></div>
@@ -491,14 +488,14 @@ rg.pvoi &lt;-<span class="st"> </span><span class="kw">nauf_ref.grid</span>(m.pv
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $pmmeans</span>
 <span class="co">#&gt;  lang         pmmean         SE    df   lower.CL  upper.CL</span>
-<span class="co">#&gt;  Catalan  1.05408721 0.08543594 42.33  0.8817105 1.2264639</span>
-<span class="co">#&gt;  Spanish -0.07211641 0.13419220 10.59 -0.3688843 0.2246515</span>
+<span class="co">#&gt;  Catalan  1.05408730 0.08543597 42.33  0.8817105 1.2264641</span>
+<span class="co">#&gt;  Spanish -0.07211647 0.13419238 10.59 -0.3688850 0.2246521</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Confidence level used: 0.95 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $contrasts</span>
 <span class="co">#&gt;  contrast          estimate        SE    df t.ratio p.value</span>
-<span class="co">#&gt;  Catalan - Spanish 1.126204 0.1590813 20.09   7.079  &lt;.0001</span></code></pre></div>
+<span class="co">#&gt;  Catalan - Spanish 1.126204 0.1590814 20.09   7.079  &lt;.0001</span></code></pre></div>
 <p>In this way, we are able to use all of the information in the dataset when fitting the model, account for the uncertainty introduced by repeated measures on the subjects, assigning different random effects to the two langauges, and then test any variety of hypotheses we might have about the effects of the factors within the subsets of the data where the comparisons make sense.</p>
 </div>
 <div id="multiple-sets-of-contrasts-for-a-factor" class="section level2">
@@ -586,7 +583,7 @@ mod &lt;-<span class="st"> </span><span class="kw">nauf_lmer</span>(sdat$formula
 <div id="references" class="section level2">
 <h2>References</h2>
 <p>If you use the <em>nauf</em> package in a publication, please cite:</p>
-<pre><code>Eager, Christopher D. (2017). nauf: Regression with NA Values in Unordered Factors. R package version 1.0.0. https://CRAN.R-project.org/package=nauf</code></pre>
+<pre><code>Eager, Christopher D. (2017). nauf: Regression with NA Values in Unordered Factors. R package version 1.0.1. https://CRAN.R-project.org/package=nauf</code></pre>
 <p>If you analyze the <strong>plosives</strong> dataset in a publication, please cite:</p>
 <pre><code>Eager, Christopher D. (2017). Contrast preservation and constraints on individual phonetic variation. Doctoral thesis. University of Illinois at Urbana-Champaign.</code></pre>
 <p>If you analyze the <strong>fricatives</strong> dataset in a publication, please cite:</p>

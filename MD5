@@ -1,6 +1,6 @@
-7b2e119de76824d63f18c23e728bb745 *DESCRIPTION
+3288962c9cdeb46f1795109fed3861e3 *DESCRIPTION
 4ee7a87a53f31e3fa744f18fcd2fea8a *NAMESPACE
-9a69f9a690aecc51b39e6b1128393130 *NEWS.md
+6c2b69b1a3d205379498944d92fc1d7e *NEWS.md
 d35f9ac1ab0104aa1d05abca20335592 *R/all-class.R
 93d871cee1248d2f5d17ad4b0397500e *R/all-generic.R
 8c79fcaa88223642a81ce5d958cd2529 *R/data.R
@@ -17,14 +17,14 @@ d35f9ac1ab0104aa1d05abca20335592 *R/all-class.R
 823a1fdbf9aa560d9466d4baddf60a0c *R/nauf_model.frame.R
 b2d504e6ddd532c9af015bed270f5446 *R/nauf_model.matrix.R
 5c1ce5aa1fb3c15315b2b211f6572a33 *R/utilities.R
-0e7a45083b683a33c2b6fa5b7a2e6160 *README.md
+e244e2320d4878ddc54646692acf91dc *README.md
 b4850452020de9ffe2564dadb8683513 *build/vignette.rds
 37a5073776193874bae186ea2eb8c318 *data/fricatives.rda
 6c1f82950e60b3776a99c0550e8d31aa *data/plosives.rda
-8062f3bc26d0fc116f6c72c21a6bb8d2 *inst/CITATION
+83822bc176ae110a97a1d438e39d65e1 *inst/CITATION
 8c153628a7901a8c68c607f676babbc3 *inst/doc/using-nauf.R
-e9f194ffac0a3968d3871b03c136aa75 *inst/doc/using-nauf.Rmd
-8fe965b0d2be4af392b4a15244632e5f *inst/doc/using-nauf.html
+054b0a3b6b29aa08e70a29bf186a9300 *inst/doc/using-nauf.Rmd
+f26368b7002cca4836e5a8ae4e6ed5d5 *inst/doc/using-nauf.html
 6a9caa78c2398baf73b4d5191f37071a *man/anova.nauf.merMod.Rd
 16b09d4ac505849417442632d71084af *man/fricatives.Rd
 7c027578061183a39e528f60d7502159 *man/nauf-package.Rd
@@ -46,5 +46,5 @@ c68d7a5b8ba156267456b7a7c82a003f *tests/testthat/test-nauf_glFormula.R
 cd9a50c0561ad8323b0a6719954ab0ab *tests/testthat/test-nauf_interaction.R
 39bbf62d871bb9f6c06e36da3d54dada *tests/testthat/test-nauf_model.frame.R
 df481a9069e36ab7952b1bb531ee29b2 *tests/testthat/test-nauf_model.matrix.R
-413a9f1938f761efe133b4385b416f34 *tests/testthat/test-nauf_pmmeans.R
-e9f194ffac0a3968d3871b03c136aa75 *vignettes/using-nauf.Rmd
+02393a359a332b0926a0ac166bfa68f4 *tests/testthat/test-nauf_pmmeans.R
+054b0a3b6b29aa08e70a29bf186a9300 *vignettes/using-nauf.Rmd
